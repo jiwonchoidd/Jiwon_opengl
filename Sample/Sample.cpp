@@ -11,5 +11,8 @@ int main()
 
 	gEngine->Release();
 
+	delete gEngine;
+	gEngine = nullptr;
+
 	return -1;
 }

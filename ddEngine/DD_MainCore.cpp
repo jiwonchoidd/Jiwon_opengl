@@ -50,6 +50,7 @@ void DD_MainCore::Frame()
 void DD_MainCore::Release()
 {
     glfwTerminate();
+    glfwDestroyWindow(pWindow);
     pWindow = nullptr;
 }
 void Framebuffer_size_callback(GLFWwindow* window, int width, int height)
@@ -61,5 +62,3 @@ void processInput(GLFWwindow* window)
     if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
 }
-
-
