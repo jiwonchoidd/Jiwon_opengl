@@ -1388,6 +1388,7 @@ typedef void (* GLFWwindowmaximizefun)(GLFWwindow* window, int maximized);
  *  @ingroup window
  */
 typedef void (* GLFWframebuffersizefun)(GLFWwindow* window, int width, int height);
+typedef void (* GLFWframebGLFWwindowuffersizefun)(GLFWwindow* window, int width, int height);
 
 /*! @brief The function pointer type for window content scale callbacks.
  *

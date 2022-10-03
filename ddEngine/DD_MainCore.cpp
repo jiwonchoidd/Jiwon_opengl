@@ -1,32 +1,65 @@
 #include "DD_MainCore.h"
-#include "DD_Std.h"
-int main()
+
+void Framebuffer_size_callback(GLFWwindow* window, int width, int height);
+void processInput(GLFWwindow* window);
+
+void DD_MainCore::Start()
 {
-    GLFWwindow* window; 
+    // glfw: 초기화 및 설정
+    // ------------------------------
+    glfwInit();
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-    if (false == glfwInit())
-        return -1;
+#ifdef __APPLE__
+    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+#endif
 
-    window = glfwCreateWindow(640, 480, "Hello World", NULL, NULL);
-    if (nullptr == window)
+    // glfw 윈도우 생성
+    // --------------------
+    pWindow = glfwCreateWindow(800, 600, "LearnOpenGL", NULL, NULL);
+    if (pWindow == NULL)
     {
-        glfwTerminate(); 
-        return -1;
+        glfwTerminate();
+        return;
     }
+    glfwMakeContextCurrent(pWindow);
+    glfwSetFramebufferSizeCallback(pWindow, Framebuffer_size_callback);
 
-
-    glfwMakeContextCurrent(window); 
-    glewInit(); 
-    glClearColor(0.5, 0.75, 1, 1);
-
-
-    while (!glfwWindowShouldClose(window))
-    {
-        glClear(GL_COLOR_BUFFER_BIT); 
-        glfwSwapBuffers(window); 
-        glfwPollEvents(); 
-    }
-
-    glfwTerminate();
-    return 0;
+    // glew 초기화
+    glewInit();
 }
+void DD_MainCore::Frame()
+{
+    // render loop
+    // -----------
+    while (!glfwWindowShouldClose(pWindow))
+    {
+        // input
+        // -----
+        processInput(pWindow);
+
+        // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
+        // -------------------------------------------------------------------------------
+        glfwSwapBuffers(pWindow);
+        glfwPollEvents();
+    }
+}
+
+void DD_MainCore::Release()
+{
+    glfwTerminate();
+    pWindow = nullptr;
+}
+void Framebuffer_size_callback(GLFWwindow* window, int width, int height)
+{
+    glViewport(0, 0, width, height);
+}
+void processInput(GLFWwindow* window)
+{
+    if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS)
+        glfwSetWindowShouldClose(window, true);
+}
+
+
